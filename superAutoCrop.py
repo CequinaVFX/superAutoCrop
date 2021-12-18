@@ -20,14 +20,13 @@ See the ref_menu.py as a reference
 
 import nuke
 
-
-def run_AutoCrop(selNode):
+def input_AutoCrop(selNode):
 
     z = nuke.Panel('superAutoCrop')
 
-    range = nuke.FrameRange('%s-%s' % (nuke.root().firstFrame(), nuke.root().lastFrame()))
+    frame_range = nuke.FrameRange('%s-%s' % (nuke.root().firstFrame(), nuke.root().lastFrame()))
 
-    z.addSingleLineInput('frame range', range)
+    z.addSingleLineInput('frame range', frame_range)
 
     z.addBooleanCheckBox('use rgb', False)
 
@@ -35,13 +34,38 @@ def run_AutoCrop(selNode):
     result = z.show()
 
     if result == True:
+        fr = z.value('frame range')
+        useRGB = z.value('use rgb')
+        run_AutoCrop(selNode, fr, useRGB)
+    else:
+        print ('superAutoCrop aborted!')
+        return
+
+def run_AutoCrop(selNode, fr, useRGB):
 
         print ()
+        try:
+            a, b = fr.split('-')
+        except:
+            print ('Error: ', fr)
+            message = nuke.ask('You should use - (hyphen) to separate IN and OUT. Ex.: 10-60\nTry again?')
 
-        a, b = z.value('frame range').split('-')
+            if message == True:
+                input_AutoCrop(selNode)
+            else:
+                return
 
-        frame_range = nuke.FrameRange('%s-%s' % (a, b))
-        useRGB = z.value('use rgb')
+        try:
+            a, b = fr.split('-')
+            frame_range = nuke.FrameRange('%s-%s' % (a, b))
+        except:
+            print ('Error: ', fr)
+            message = nuke.ask('Something wrong on frame range typing.\nTry again?')
+
+            if message == True:
+                input_AutoCrop(selNode)
+            else:
+                return
 
         selNode = nuke.selectedNode()
         nkRoot = nuke.root()
@@ -186,6 +210,7 @@ def run_AutoCrop(selNode):
         # Delete CurveTool
         nuke.delete(cTool)
 
+        print ('AutoCrop successfully created')
 
 
 def superAutoCrop():
@@ -212,8 +237,7 @@ def superAutoCrop():
             nuke.message("Select node can't be a Viewer")
             return
         else:
-            run_AutoCrop(selNode)
-            print ('AutoCrop successfully created')
+            input_AutoCrop(selNode)
             return
 
 
