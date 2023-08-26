@@ -4,7 +4,7 @@ A tool to run the Nuke's original CurveTool and creates an animated bounding box
 
 # install
 
-rename and put superAutoCrop folder inside of your .nuke folder
+Rename the folder to superAutoCrop and put it inside of your .nuke folder
 and add this line on your init.py
 ```bash
 "nuke.pluginAddPath('./superAutoCrop')"
@@ -16,7 +16,7 @@ Select a node and run the script from Toolbar.
 Shortcut = [
 
 # Credits
-Created by [Luciano Cequinel]www.cequinavfx.com.
+Created by [Luciano Cequinel](www.cequinavfx.com). 
 To report bugs or suggestions lucianocequinel@gmail.com
 
 ## License
