@@ -1,3 +1,4 @@
+import nuke
 import superAutoCrop
 
 SHORTCUT = '['
