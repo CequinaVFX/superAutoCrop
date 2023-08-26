@@ -169,7 +169,7 @@ def run_AutoCrop(selNode, fr):
         c = nuke.Text_Knob('c0', '')
         grAutoCrop.addKnob(c)
 
-        c = nuke.Text_Knob('c1', '', '<font color = "#EF4E3D">Version 2.0.0')
+        c = nuke.Text_Knob('c1', '', '<font color = "#EF4E3D">Version 2.1.0 - August/2023')
         grAutoCrop.addKnob(c)
 
         c = nuke.Text_Knob('c2', '', '<font color = "#EF4E3D">Created by Luciano Cequinel')
