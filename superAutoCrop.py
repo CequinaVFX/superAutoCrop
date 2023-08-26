@@ -81,13 +81,8 @@ def run_AutoCrop(selNode, fr):
         cTool = nuke.nodes.CurveTool()
         cTool.setInput(0, selNode)
         cTool['operation'].setValue('Auto Crop')
-
-        if useRGB == True:
-            cTool['channels'].setValue('rgba')
-            print ('...using rgb...')
-        else:
-            cTool['channels'].setValue('alpha')
-            print('...using alpha only...')
+        cTool['channels'].setValue('alpha')
+        print('...using alpha only...')
         
         cTool['resetROI'].setValue('True')
         cTool.knob("ROI").setValue( [ 0, 0 , selNode.width() , selNode.height() ] )
