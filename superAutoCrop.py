@@ -1,21 +1,12 @@
-"""
- superAutoCrop
- Version 2.1.0
- Release August 26 2023
-
- Did as a thankful gift to my mentor and friend Emerson Bonadias.
-
- Created by Luciano Cequinel (vimeo.com/cequinavfx)
- to report bugs or suggestions lucianocequinel@gmail.com
-
-Just write
-import superAutoCrop
-on menu.py
-and copy superAutoCrop.py to .nuke folder
-
-See the ref_menu.py as a reference
-
-"""
+#******************************************************
+# Did as a thankful gift to my mentor and friend Emerson Bonadias.
+#
+# version: 2.1.2
+# date: August 26 2023
+#
+# license: MIT
+# author: Luciano Cequinel [lucianocequinel@gmail.com]
+#******************************************************
 
 import nuke
 
@@ -68,7 +59,6 @@ def run_AutoCrop(selNode, fr):
 
         # get output from selected node
         output = nuke.dependentNodes(nuke.INPUTS, selNode)
-
 
         # Get Width & Height
         wNode = selNode.width()

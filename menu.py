@@ -1,6 +1,7 @@
 import nuke
 import superAutoCrop
 
+# you can change shortcut here, use None if you do not want a shortcut
 SHORTCUT = '['
 
 #Add a menu and assign a shortcut
