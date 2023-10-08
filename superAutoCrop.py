@@ -1,8 +1,8 @@
 #******************************************************
-# Did as a thankful gift to my mentor and friend Emerson Bonadias.
+# I created this tool as a thankful gift to my mentor and friend Emerson Bonadias.
 #
-# version: 2.1.2
-# date: August 26 2023
+# version: 2.1.3
+# date: October 09 2023
 #
 # license: MIT
 # author: Luciano Cequinel [lucianocequinel@gmail.com]
