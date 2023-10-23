@@ -1,10 +1,12 @@
 import nuke
 import superAutoCrop
 
-# you can change shortcut here, use None if you do not want a shortcut
+# you can change the shortcut here; use 'None' if you do not want a shortcut
 SHORTCUT = '['
+# Set an icon; use 'None' if you do not want a one
+ICON = 'AutoCrop.png'
 
-#Add a menu and assign a shortcut
+# Add the command to Nuke's toolbar, assign a shortcut, and an icon
 toolbar = nuke.menu('Nodes')
-cqnTools = toolbar.addMenu('CQNTools', icon='Modify.png')
-cqnTools.addCommand('superAutoCrop', 'superAutoCrop.superAutoCrop()', SHORTCUT, icon='AutoCrop.png')
+customToolbar = toolbar.addMenu('Custom Tools', icon='Modify.png')
+customToolbar.addCommand('superAutoCrop', 'superAutoCrop.super_auto_crop()', SHORTCUT, icon=ICON)
