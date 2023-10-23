@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
  I did this tool as a thankful gift to my mentor and friend, Emerson Bonadias.
 """
@@ -8,17 +7,6 @@ __license__ = 'MIT'
 __author__ = 'Luciano Cequinel'
 __contact__ = 'lucianocequinel@gmail.com'
 
-=======
-#******************************************************
-# I created this tool as a thankful gift to my mentor and friend Emerson Bonadias.
-#
-# version: 2.1.3
-# date: October 09 2023
-#
-# license: MIT
-# author: Luciano Cequinel [lucianocequinel@gmail.com]
-#******************************************************
->>>>>>> origin/main
 
 import nuke
 
@@ -258,9 +246,5 @@ def get_selection():
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     """ Run it without installation """
     super_auto_crop()
-=======
-    run = superAutoCrop()
->>>>>>> origin/main
