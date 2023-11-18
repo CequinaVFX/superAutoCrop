@@ -1,22 +1,23 @@
 """
  I did this tool as a thankful gift to my mentor and friend, Emerson Bonadias.
 """
-__version__ = '2.2.4'
-__release_date__ = 'October, 24 2023'
-__license__ = 'MIT'
 __author__ = 'Luciano Cequinel'
 __contact__ = 'lucianocequinel@gmail.com'
+__version__ = '2.2.6'
+__release_date__ = 'November, 18 2023'
+__license__ = 'MIT'
 
 
 import nuke
 
 
 def create_curve_tool(sel_node, frame_range):
-    """ Create a Curve Tool node and execute the AutoCrop function
+    """ 
+        Create a Curve Tool node and execute the AutoCrop function
 
-    :param sel_node: nuke.selectedNode() → Node
-    :param frame_range: class nuke.FrameRange
-    :return: CurveTool node
+        :param sel_node: nuke.selectedNode() > Node
+        :param frame_range: class nuke.FrameRange
+        :return: CurveTool node
     """
 
     new_curvetool = nuke.nodes.CurveTool()
@@ -35,16 +36,17 @@ def create_curve_tool(sel_node, frame_range):
 
 
 def create_group_node(sel_node, curve_tool, frame_range):
-    """ Function to create a group node,
+    """ 
+        Function to create a group node,
         with an Input node,
         an animated Crop node,
         and an Output node
 
-    :param sel_node: nuke.selectedNode() → Node
-    :param curve_tool: CurveTool node
-    :param frame_range: class nuke.FrameRange
-    :return:
-        Group node
+        :param sel_node: nuke.selectedNode() > Node
+        :param curve_tool: CurveTool node
+        :param frame_range: class nuke.FrameRange
+        :return:
+            Group node
     """
 
     output = nuke.dependentNodes(nuke.INPUTS, sel_node)
@@ -95,10 +97,11 @@ def create_group_node(sel_node, curve_tool, frame_range):
 
 
 def create_group_knobs(autocrop_group):
-    """ Create knobs to control the crop size
+    """
+        Create knobs to control the crop size
 
-    :param autocrop_group:
-    :return: None
+        :param autocrop_group:
+        :return: None
     """
     tab = nuke.Tab_Knob('Size Control')
     autocrop_group.addKnob(tab)
@@ -153,8 +156,8 @@ def create_group_knobs(autocrop_group):
 
 def super_auto_crop():
     """
-    The main function will create a Group Node with custom knobs to control the bounding box.
-    An alpha channel and a frame range needed.
+        The main function will create a Group Node with custom knobs to control the bounding box.
+        An alpha channel and a frame range needed.
     """
     print()
     print(' {}'.format('_' * 29))
@@ -209,9 +212,10 @@ def super_auto_crop():
 
 
 def get_frame_range():
-    """ Get frame range from user
+    """ 
+        Get frame range from user
 
-    :return: class nuke.FrameRange or None
+        :return: class nuke.FrameRange or None
     """
     _range = '%s-%s' % (nuke.root().firstFrame(), nuke.root().lastFrame())
 
@@ -227,9 +231,10 @@ def get_frame_range():
 
 
 def get_selection():
-    """ Function to get and validate the selected node
+    """ 
+        Function to get and validate the selected node
 
-    :return: nuke.selectedNode() → Node
+        :return: nuke.selectedNode() > Node
     """
     sel_nodes = nuke.selectedNodes()
 
@@ -246,5 +251,7 @@ def get_selection():
 
 
 if __name__ == '__main__':
-    """ Run it without installation """
+    """
+        Run it without installation
+    """
     super_auto_crop()
