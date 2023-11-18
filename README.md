@@ -5,7 +5,7 @@ I did this tool as a thankful gift to my mentor and friend, Emerson Bonadias.
 ## installation
 Rename the downloaded folder to **_superAutoCrop_** and put it inside your _.nuke_ folder.</p>Add this line on your init.py
 ```bash
-"nuke.pluginAddPath('./superAutoCrop')"
+nuke.pluginAddPath('./superAutoCrop')
 ```
 [Locating the default .nuke directory](https://support.foundry.com/hc/en-us/articles/207271649-Q100048-Nuke-Directory-Locations)
 
