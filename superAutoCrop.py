@@ -7,7 +7,7 @@ Disclaimer:
 
 __author__ = 'Luciano Cequinel'
 __contact__ = 'lucianocequinel@gmail.com'
-__version__ = '2.3.0'
+__version__ = '2.3.1'
 __release_date__ = 'July, 02 2024'
 __license__ = 'MIT'
 
@@ -236,7 +236,8 @@ def get_frame_range():
     try:
         frame_range = nuke.FrameRange(get_range)
 
-    except:
+    except Exception as err:
+        print(err)
         return None
 
     else:
