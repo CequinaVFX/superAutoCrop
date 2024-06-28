@@ -1,10 +1,14 @@
 """
- I did this tool as a thankful gift to my mentor and friend, Emerson Bonadias.
+
+Disclaimer:
+    I created this tool as a thank-you gift for my mentor and friend, Emerson Bonadias.
+
 """
+
 __author__ = 'Luciano Cequinel'
 __contact__ = 'lucianocequinel@gmail.com'
-__version__ = '2.2.6'
-__release_date__ = 'November, 18 2023'
+__version__ = '2.3.0'
+__release_date__ = 'July, 02 2024'
 __license__ = 'MIT'
 
 
@@ -13,11 +17,11 @@ import nuke
 
 def create_curve_tool(sel_node, frame_range):
     """ 
-        Create a Curve Tool node and execute the AutoCrop function
+        Creates a Curve Tool node and executes the AutoCrop function.
 
-        :param sel_node: nuke.selectedNode() > Node
-        :param frame_range: class nuke.FrameRange
-        :return: CurveTool node
+        :param sel_node: The selected node to which the Curve Tool will be connected.
+        :param frame_range: The frame range over which the AutoCrop operation will be executed.
+        :return: The created Curve Tool node.
     """
 
     new_curvetool = nuke.nodes.CurveTool()
@@ -37,19 +41,14 @@ def create_curve_tool(sel_node, frame_range):
 
 def create_group_node(sel_node, curve_tool, frame_range):
     """ 
-        Function to create a group node,
-        with an Input node,
-        an animated Crop node,
-        and an Output node
+        Creates a Group node containing an Input node, an animated Crop node, and an Output node.
 
-        :param sel_node: nuke.selectedNode() > Node
-        :param curve_tool: CurveTool node
-        :param frame_range: class nuke.FrameRange
-        :return:
-            Group node
+        :param sel_node: The selected node to which the Group node will be connected.
+        :param curve_tool: The Curve Tool node containing the AutoCrop data.
+        :param frame_range: The frame range over which the Crop node will be animated.
+        :return: A tuple containing the created Group node and the animated Crop node.
     """
 
-    output = nuke.dependentNodes(nuke.INPUTS, sel_node)
     autocrop_group = nuke.createNode('Group')
 
     autocrop_group.setName('superAutoCrop', uncollide=True)
@@ -64,7 +63,7 @@ def create_group_node(sel_node, curve_tool, frame_range):
     # create an Input node
     input_node_group = nuke.createNode('Input')
 
-    # create New Crop with data from CurveTool
+    # create New Crop and copy the animation from CurveTool
     crop_node = nuke.createNode('Crop')
     crop_node['box'].setAnimated()
     crop_node.knob("box").copyAnimations(curve_tool.knob("autocropdata").animations())
@@ -88,9 +87,6 @@ def create_group_node(sel_node, curve_tool, frame_range):
 
     autocrop_group.setInput(0, sel_node)
 
-    output = nuke.toNode(output[0].name())
-    output.setInput(0, autocrop_group)
-
     nuke.autoplace(autocrop_group)
 
     return autocrop_group, crop_node
@@ -98,11 +94,12 @@ def create_group_node(sel_node, curve_tool, frame_range):
 
 def create_group_knobs(autocrop_group):
     """
-        Create knobs to control the crop size
+        Creates custom knobs to control the crop size within the Group node.
 
-        :param autocrop_group:
+        :param autocrop_group: The Group node to which the knobs will be added.
         :return: None
     """
+
     tab = nuke.Tab_Knob('Size Control')
     autocrop_group.addKnob(tab)
 
@@ -156,27 +153,36 @@ def create_group_knobs(autocrop_group):
 
 def super_auto_crop():
     """
-        The main function will create a Group Node with custom knobs to control the bounding box.
-        An alpha channel and a frame range needed.
+        Main function to create a Group node with custom knobs to control the bounding box.
+        Requires an alpha channel and a frame range.
     """
+
     print()
     print(' {}'.format('_' * 29))
-    print(' Starting AutoCrop function...')
+    print('\n Starting AutoCrop function...')
 
     sel_node = get_selection()
-    print(' > to node: {}'.format(sel_node.name()))
+
     if sel_node:
+        
+        print(' > selected node: {}'.format(sel_node.name()))
+
         frame_range = get_frame_range()
+
         if not frame_range:
-            return  # breaks function if None it was returned from get_frame_range()
+            return  # breaks function if None is returned from get_frame_range()
+
+        node_after = nuke.dependentNodes(nuke.INPUTS, sel_node)
 
         # create a CurveTool
-        print(' > to range: {}'.format(frame_range))
+        print(' > frame-range: {}'.format(frame_range))
         print(' >> creating CurveTool node')
+
         curve_tool = create_curve_tool(sel_node, frame_range)
 
         # create a Group
         print(' >> creating Group Node...')
+
         autocrop_group, crop_node = create_group_node(sel_node, curve_tool, frame_range)
 
         # create knobs to control the bounding box
@@ -205,43 +211,54 @@ def super_auto_crop():
         # Delete CurveTool
         _del = nuke.delete(curve_tool)
 
+        if len(node_after) > 0:
+            node_after = nuke.toNode(node_after[0].name())
+            node_after.setInput(0, autocrop_group)
+
         print('')
         print(' AutoCrop successfully created')
         print(' {}'.format('_'*29))
+
         return
 
 
 def get_frame_range():
     """ 
-        Get frame range from user
+        Prompts the user to input a frame range and returns it.
 
-        :return: class nuke.FrameRange or None
+        :return: The frame range entered by the user, or None if the input is invalid.
     """
+
     _range = '%s-%s' % (nuke.root().firstFrame(), nuke.root().lastFrame())
 
+    get_range = nuke.getInput('Inform the Frame Range to bake.\nUse 1-100 or 1,100', _range)
+
     try:
-        frame_range = nuke.FrameRange(nuke.getInput('Inform the Frame Range to bake.\nUse 1-100 or 1,100', _range))
+        frame_range = nuke.FrameRange(get_range)
+
+    except:
+        return None
+
+    else:
         return frame_range
-    except Exception as error:
-        _ask = nuke.ask('Invalid frame range\n >> Error: {}\n\nReturn project frame range?'.format(error))
-        if _ask:
-            return nuke.FrameRange(_range)
-        else:
-            return None
 
 
 def get_selection():
     """ 
-        Function to get and validate the selected node
+        Retrieves and validates the selected node.
 
-        :return: nuke.selectedNode() > Node
+        :return: The selected node, or None if no valid node is selected.
     """
+
     sel_nodes = nuke.selectedNodes()
 
     if len(sel_nodes) == 1:
+
         sel_node = nuke.selectedNode()
-        if sel_node.Class() is not 'Viewer':
+
+        if not sel_node.Class() == 'Viewer':
             return sel_node
+
         else:
             nuke.message('Selection cannot be an Viewer')
 
@@ -252,6 +269,7 @@ def get_selection():
 
 if __name__ == '__main__':
     """
-        Run it without installation
+        Run the script without installation.
     """
+
     super_auto_crop()
