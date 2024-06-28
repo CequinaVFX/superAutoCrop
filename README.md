@@ -1,22 +1,27 @@
 # superAutoCrop
->A tool that runs Nuke's original CurveTool and creates an animated bounding box, with controllers to increase or decrease its size</p>
-I did this tool as a thankful gift to my mentor and friend, Emerson Bonadias.
+A tool that utilizes Nuke's original CurveTool to create an animated bounding box with controllers to adjust its size.
 
-## installation
-Rename the downloaded folder to **_superAutoCrop_** and put it inside your _.nuke_ folder.</p>Add this line on your init.py
-```bash
-nuke.pluginAddPath('./superAutoCrop')
-```
-[Locating the default .nuke directory](https://support.foundry.com/hc/en-us/articles/207271649-Q100048-Nuke-Directory-Locations)
+This tool was created as a thank-you gift for my mentor and friend, Emerson Bonadias.
+
+## Installation
+1. Rename the downloaded folder to **_superAutoCrop_** and place it inside your _.nuke_ folder.
+2. Add the following line to your `init.py` file:
+    ```python
+    nuke.pluginAddPath('./superAutoCrop')
+    ```
+   For more information on locating the default .nuke directory, refer to [this guide](https://support.foundry.com/hc/en-us/articles/207271649-Q100048-Nuke-Directory-Locations).
 
 ## Usage
-Select a node and run the script from Toolbar.</p>
-Shortcut = [
-> You can edit this shortcut in line 6 of the menu.py file.
+1. Select a node in Nuke.
+2. Call the tool using the provided shortcut, or run it from the Toolbar.
+
+### Shortcut
+The default shortcut is `[` (open bracket). You can change this shortcut by editing line 6 of the `menu.py` file.
 
 ## Credits
-Created by [Luciano Cequinel](https://www.cequinavfx.com).</p>
-To report bugs or suggestions: lucianocequinel@gmail.com
+Created by [Luciano Cequinel](https://www.cequinavfx.com).
+
+To report bugs or make suggestions, please contact: lucianocequinel@gmail.com
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
